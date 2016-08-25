@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.chrthms.hmatic4j.event;
+package de.chrthms.hmatic4j.event.client;
 
 /**
  *
  * @author christian
  */
-public interface HMatic4jEvent {
+public interface HMEventBuilder {
+ 
+    // TODO remove sample
+    String helloPlugin();
+    
+    HMObserver observe();
     
 }
