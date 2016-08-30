@@ -17,6 +17,7 @@
 package de.chrthms.hmatic4j.event.server.impl;
 
 import de.chrthms.hmatic4j.event.server.LogicLayerHandler;
+import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,12 +30,20 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
     private static final Logger LOG = LoggerFactory.getLogger(LogicLayerHandlerImpl.class);
     
     @Override
+    public Vector<Object> multicall(Vector<Object> requests) {
+        LOG.info("\n>>>>>>>>>>> multicall >>>>>>>>>>>>");
+        LOG.info("requests = {}", requests);
+        LOG.info("<<<<<<<<<<< multicall <<<<<<<<<<<<\n");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
     public void event(String interfaceId, String address, String valueKey, Object value) {
         LOG.info("\n>>>>>>>>>>> EVENT >>>>>>>>>>>>");
-        LOG.info(" = {}", interfaceId);
-        LOG.info(" = {}", address);
-        LOG.info(" = {}", valueKey);
-        LOG.info(" = {}", value);
+        LOG.info("interfaceId = {}", interfaceId);
+        LOG.info("address = {}", address);
+        LOG.info("valueKey = {}", valueKey);
+        LOG.info("value = {}", value);
         LOG.info("<<<<<<<<<<< EVENT <<<<<<<<<<<<\n");
     }
 

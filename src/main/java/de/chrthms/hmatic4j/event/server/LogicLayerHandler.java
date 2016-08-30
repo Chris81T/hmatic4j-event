@@ -16,6 +16,8 @@
 
 package de.chrthms.hmatic4j.event.server;
 
+import java.util.Vector;
+
 /**
  * The "homematic" logic layer (see homematic specs) has to provide several methods.
  * 
@@ -26,6 +28,13 @@ package de.chrthms.hmatic4j.event.server;
  * @author christian
  */
 public interface LogicLayerHandler {
+    
+    /**
+     * provides the system.multicall procedure. Expected by homematic.
+     * @param requests
+     * @return 
+     */
+    Vector<Object> multicall(Vector<Object> requests);
 
     void event(String interfaceId, String address, String valueKey, Object value);
     
