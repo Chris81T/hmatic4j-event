@@ -18,7 +18,6 @@ package de.chrthms.hmatic4j.event.server;
 
 import de.chrthms.hmatic4j.event.server.impl.LogicLayerHandlerImpl;
 import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.server.PropertyHandlerMapping;
 import org.apache.xmlrpc.server.XmlRpcHandlerMapping;
 import org.apache.xmlrpc.webserver.XmlRpcServlet;
 
@@ -32,10 +31,11 @@ public class LogicLayerServlet extends XmlRpcServlet {
     @Override
     protected XmlRpcHandlerMapping newXmlRpcHandlerMapping() throws XmlRpcException {
             
-        PropertyHandlerMapping handlerMapping = new PropertyHandlerMapping();
+        LogicLayerHandlerMapping handlerMapping = new LogicLayerHandlerMapping();
         
         /**
-         * common expected methods without any further namespaces key
+         * common expected methods without any further namespaces key. Internally
+         * a leading dot is required. Check the custom HandlerMapping class.
          */
         handlerMapping.addHandler("", LogicLayerHandlerImpl.class);
         
