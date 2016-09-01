@@ -30,8 +30,9 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
     private static final Logger LOG = LoggerFactory.getLogger(LogicLayerHandlerImpl.class);
     
     @Override
-    public Vector<Object> multicall(Vector<Object> requests) {
+    public Object multicall(Object requests) {
         LOG.info("\n>>>>>>>>>>> multicall >>>>>>>>>>>>");
+        LOG.info("requests class type = {}", requests.getClass());
         LOG.info("requests = {}", requests);
         LOG.info("<<<<<<<<<<< multicall <<<<<<<<<<<<\n");
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

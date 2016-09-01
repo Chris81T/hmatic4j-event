@@ -34,7 +34,7 @@ public interface LogicLayerHandler {
      * @param requests
      * @return 
      */
-    Vector<Object> multicall(Vector<Object> requests);
+    Object multicall(Object requests);
 
     void event(String interfaceId, String address, String valueKey, Object value);
     
