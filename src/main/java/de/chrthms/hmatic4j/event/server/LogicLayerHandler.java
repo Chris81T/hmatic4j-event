@@ -36,11 +36,13 @@ public interface LogicLayerHandler {
      */
     Object multicall(Object requests);
 
+    String[] listMethods(String interfaceId);
+    
     void event(String interfaceId, String address, String valueKey, Object value);
     
     Object[] listDevices(String interfaceId);
     
-    void newDevices(String interfaceId, Object[] deviceDescriptions);
+    void newDevices(String interfaceId, Object deviceDescriptions);
     
     void deleteDevices(String interfaceId, String[] addresses);
     

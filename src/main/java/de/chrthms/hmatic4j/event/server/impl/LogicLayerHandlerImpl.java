@@ -17,7 +17,8 @@
 package de.chrthms.hmatic4j.event.server.impl;
 
 import de.chrthms.hmatic4j.event.server.LogicLayerHandler;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,11 +32,33 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
     
     @Override
     public Object multicall(Object requests) {
-        LOG.info("\n>>>>>>>>>>> multicall >>>>>>>>>>>>");
+        LOG.info("\n>>>>>>>>>>> system.multicall >>>>>>>>>>>>");
         LOG.info("requests class type = {}", requests.getClass());
         LOG.info("requests = {}", requests);
-        LOG.info("<<<<<<<<<<< multicall <<<<<<<<<<<<\n");
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        LOG.info("<<<<<<<<<<< system.multicall <<<<<<<<<<<<\n");
+        return null;
+    }
+    
+    @Override
+    public String[] listMethods(String interfaceId) {
+        List<String> methods = new ArrayList<>();
+        LOG.info("\n>>>>>>>>>>> system.listMethods >>>>>>>>>>>>");
+        LOG.info("interfaceId = {}", interfaceId);
+
+        methods.add("system.multicall");
+        methods.add("system.listMethods");
+        methods.add("event");
+        methods.add("listDevices");
+        methods.add("newDevices");
+        methods.add("deleteDevices");
+        methods.add("updateDevice");
+        methods.add("replaceDevice");
+        methods.add("readdedDevice");
+        
+        LOG.info("methods = {}", methods);
+        LOG.info("<<<<<<<<<<< system.listMethods <<<<<<<<<<<<\n");
+
+        return methods.toArray(new String[methods.size()]);
     }
     
     @Override
@@ -52,11 +75,11 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
     public Object[] listDevices(String interfaceId) {
         LOG.info("\n>>>>>>>>>>> listDevices <<<<<<<<<<<");
         LOG.info("interfaceId = {}\n", interfaceId);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Object[]{};
     }
 
     @Override
-    public void newDevices(String interfaceId, Object[] deviceDescriptions) {
+    public void newDevices(String interfaceId, Object deviceDescriptions) {
         LOG.info("\n>>>>>>>>>>> newDevices <<<<<<<<<<<");
         LOG.info("interfaceId = {}", interfaceId);
         LOG.info("deviceDescriptions = {}\n", deviceDescriptions);
