@@ -16,7 +16,8 @@
 
 package de.chrthms.hmatic4j.event.server;
 
-import java.util.Vector;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The "homematic" logic layer (see homematic specs) has to provide several methods.
@@ -34,7 +35,7 @@ public interface LogicLayerHandler {
      * @param requests
      * @return 
      */
-    Object multicall(Object requests);
+    Object multicall(List<Map<String, Object>> requests);
 
     String[] listMethods(String interfaceId);
     
@@ -42,7 +43,7 @@ public interface LogicLayerHandler {
     
     Object[] listDevices(String interfaceId);
     
-    void newDevices(String interfaceId, Object deviceDescriptions);
+    void newDevices(String interfaceId, Object[] deviceDescriptions);
     
     void deleteDevices(String interfaceId, String[] addresses);
     

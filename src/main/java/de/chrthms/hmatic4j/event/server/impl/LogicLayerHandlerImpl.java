@@ -16,9 +16,15 @@
 
 package de.chrthms.hmatic4j.event.server.impl;
 
+import de.chrthms.hmatic4j.event.exceptions.HMInvalidMethodCallTypesException;
+import de.chrthms.hmatic4j.event.exceptions.HMUnsupportedLogicLayerMethodException;
 import de.chrthms.hmatic4j.event.server.LogicLayerHandler;
+import de.chrthms.hmatic4j.event.server.LogicLayerMethods;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,35 +36,101 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(LogicLayerHandlerImpl.class);
     
-    @Override
-    public Object multicall(Object requests) {
-        LOG.info("\n>>>>>>>>>>> system.multicall >>>>>>>>>>>>");
-        LOG.info("requests class type = {}", requests.getClass());
-        LOG.info("requests = {}", requests);
-        LOG.info("<<<<<<<<<<< system.multicall <<<<<<<<<<<<\n");
-        return null;
+    private final List<String> supportedMethods;
+
+    public LogicLayerHandlerImpl() {
+        this.supportedMethods = new ArrayList<>();
+        this.supportedMethods.add(LogicLayerMethods.SYSTEM_MULTICALL.getName());
+        this.supportedMethods.add(LogicLayerMethods.SYSTEM_LIST_METHODS.getName());
+        this.supportedMethods.add(LogicLayerMethods.EVENT.getName());
+        this.supportedMethods.add(LogicLayerMethods.LIST_DEVICES.getName());
+        this.supportedMethods.add(LogicLayerMethods.NEW_DEVICES.getName());
+        this.supportedMethods.add(LogicLayerMethods.DELETE_DEVICES.getName());
+        this.supportedMethods.add(LogicLayerMethods.UPDATE_DEVICE.getName());
+        this.supportedMethods.add(LogicLayerMethods.REPLACE_DEVICE.getName());
+        this.supportedMethods.add(LogicLayerMethods.READDED_DEVICE.getName());
+        
     }
     
     @Override
+    public Object multicall(List<Map<String, Object>> requests) {
+        LOG.info("\n>>>>>>>>>>> system.multicall >>>>>>>>>>>>");
+        LOG.info("requests = {}", requests);
+        LOG.info("<<<<<<<<<<< system.multicall <<<<<<<<<<<<\n");
+        
+        AtomicReference<Object> methodResult = new AtomicReference<>();
+        
+        requests.forEach(request -> {
+            
+            /**
+             * request should be an HashMap with two entries:
+             * entry 1: methodName -> value: String
+             * entry 2: params -> value: Object[] 
+             */
+            try {
+
+                final String methodName = (String) request.get("methodName");
+                final Object[] params = (Object[]) request.get("params");
+
+                LOG.info("system.multicall -> incoming methodCall with methodName = {} and params = {}", methodName, params);
+
+                // check, if given methodName is supported...
+                LogicLayerMethods method = LogicLayerMethods.get(methodName);
+                if (method != null) {
+
+                    switch (method) {
+                        case DELETE_DEVICES:
+                            LOG.info("TODO TODO TODO switch(method) --> DELETE_DEVICES");
+                            break;
+                        case EVENT:
+                            final String interfaceId = (String) params[0];
+                            final String address = (String) params[1];
+                            final String valueKey = (String) params[2];
+                            event(interfaceId, address, valueKey, params[3]);
+                            methodResult.set(Void.class);
+                            break;
+                        case LIST_DEVICES:
+                            LOG.info("TODO TODO TODO switch(method) --> LIST_DEVICES");
+                            break;
+                        case NEW_DEVICES:
+                            LOG.info("TODO TODO TODO switch(method) --> NEW_DEVICES");
+                            break;
+                        case READDED_DEVICE:
+                            LOG.info("TODO TODO TODO switch(method) --> READDED_DEVICE");
+                            break;
+                        case REPLACE_DEVICE:
+                            LOG.info("TODO TODO TODO switch(method) --> REPLACE_DEVICE");
+                            break;
+                        case SYSTEM_LIST_METHODS:
+                            LOG.info("TODO TODO TODO switch(method) --> SYSTEM_LIST_METHODS");
+                            break;
+                        case UPDATE_DEVICE:
+                            LOG.info("TODO TODO TODO switch(method) --> UPDATE_DEVICE");
+                            break;                                
+                    }
+
+                } else {
+                    throw new HMUnsupportedLogicLayerMethodException("given methodName " + 
+                            methodName +
+                            " is not supported by this handler!");
+                }
+
+            } catch (ClassCastException e) {
+                throw new HMInvalidMethodCallTypesException("system.multicall execution failed during cast of methodCall information.", e);
+            }
+                            
+        });
+        
+        return methodResult.get();
+    }
+        
+    @Override
     public String[] listMethods(String interfaceId) {
-        List<String> methods = new ArrayList<>();
         LOG.info("\n>>>>>>>>>>> system.listMethods >>>>>>>>>>>>");
         LOG.info("interfaceId = {}", interfaceId);
-
-        methods.add("system.multicall");
-        methods.add("system.listMethods");
-        methods.add("event");
-        methods.add("listDevices");
-        methods.add("newDevices");
-        methods.add("deleteDevices");
-        methods.add("updateDevice");
-        methods.add("replaceDevice");
-        methods.add("readdedDevice");
-        
-        LOG.info("methods = {}", methods);
+        LOG.info("supportedMethods = {}", supportedMethods);
         LOG.info("<<<<<<<<<<< system.listMethods <<<<<<<<<<<<\n");
-
-        return methods.toArray(new String[methods.size()]);
+        return supportedMethods.toArray(new String[supportedMethods.size()]);
     }
     
     @Override
@@ -79,7 +151,7 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
     }
 
     @Override
-    public void newDevices(String interfaceId, Object deviceDescriptions) {
+    public void newDevices(String interfaceId, Object[] deviceDescriptions) {
         LOG.info("\n>>>>>>>>>>> newDevices <<<<<<<<<<<");
         LOG.info("interfaceId = {}", interfaceId);
         LOG.info("deviceDescriptions = {}\n", deviceDescriptions);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.chrthms.hmatic4j.event.server;
+package de.chrthms.hmatic4j.event.server.rpc;
 
 import de.chrthms.hmatic4j.event.server.impl.LogicLayerHandlerImpl;
 import org.apache.xmlrpc.XmlRpcException;
@@ -32,6 +32,12 @@ public class LogicLayerServlet extends XmlRpcServlet {
     protected XmlRpcHandlerMapping newXmlRpcHandlerMapping() throws XmlRpcException {
             
         LogicLayerHandlerMapping handlerMapping = new LogicLayerHandlerMapping();
+        
+        /**
+         * this is important for methods like "event", that won't return any
+         * value!
+         */
+        handlerMapping.setVoidMethodEnabled(true);
         
         /**
          * common expected methods without any further namespaces key. Internally

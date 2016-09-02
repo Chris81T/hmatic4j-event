@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.chrthms.hmatic4j.event.server;
+package de.chrthms.hmatic4j.event.server.rpc;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.XmlRpcHandler;
