@@ -66,6 +66,6 @@ public interface HMObserver {
      * @return a registryId for this observer. Is relevant for un-observe this
      *         observer. If onceOnly is set to true, no id will be returned.
      */
-    Optional<String> start(HMObserverExecution execution);
+    Optional<String> start(HMEventExecution execution);
     
 }

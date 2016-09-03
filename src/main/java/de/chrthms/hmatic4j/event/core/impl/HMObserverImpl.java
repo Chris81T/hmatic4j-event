@@ -19,7 +19,7 @@ package de.chrthms.hmatic4j.event.core.impl;
 import de.chrthms.hmatic4j.event.client.HMObserver;
 import de.chrthms.hmatic4j.event.client.enums.ValueKey;
 import java.util.Optional;
-import de.chrthms.hmatic4j.event.client.HMObserverExecution;
+import de.chrthms.hmatic4j.event.client.HMEventExecution;
 
 /**
  *
@@ -33,7 +33,7 @@ public class HMObserverImpl implements HMObserver {
 
     private boolean onceOnly = false;
 
-    private HMObserverExecution execution = null;
+    private HMEventExecution execution = null;
     
     @Override
     public HMObserver deviceAddress(String deviceAddress) {
@@ -60,7 +60,7 @@ public class HMObserverImpl implements HMObserver {
     }
 
     @Override
-    public Optional<String> start(HMObserverExecution execution) {
+    public Optional<String> start(HMEventExecution execution) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

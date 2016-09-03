@@ -22,7 +22,7 @@ import de.chrthms.hmatic4j.event.client.enums.ValueKey;
  * @author christian
  */
 @FunctionalInterface
-public interface HMObserverExecution {
+public interface HMEventExecution {
     
     void execute(String deviceAddress, String deviceChannel, ValueKey valueKey, Object value);
     
