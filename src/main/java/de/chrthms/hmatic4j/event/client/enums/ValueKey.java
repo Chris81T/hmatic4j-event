@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.chrthms.hmatic4j.event.client;
+package de.chrthms.hmatic4j.event.client.enums;
 
 /**
  *
  * @author christian
  */
-public interface HMEventBuilder {
-     
-    HMObserver observe();
-    void unobserve(String registryId);
+public enum ValueKey {
+    
+    LEVEL,
+    STOP,
+    WORKING
     
 }

@@ -17,18 +17,55 @@
 package de.chrthms.hmatic4j.event.core.impl;
 
 import de.chrthms.hmatic4j.event.client.HMObserver;
+import de.chrthms.hmatic4j.event.client.enums.ValueKey;
+import java.util.Optional;
+import de.chrthms.hmatic4j.event.client.HMObserverExecution;
 
 /**
  *
  * @author christian
  */
 public class HMObserverImpl implements HMObserver {
-
-    private String address = null;
-    private String valueKey = null;
     
-    public void handleEvent(String address, String valueKey, Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private String deviceAddress = null;
+    private String deviceChannel = null;
+    private ValueKey valueKey = null;
+
+    private boolean onceOnly = false;
+
+    private HMObserverExecution execution = null;
+    
+    @Override
+    public HMObserver deviceAddress(String deviceAddress) {
+        this.deviceAddress = deviceAddress;
+        return this;
     }
 
+    @Override
+    public HMObserver deviceChannel(String deviceChannel) {
+        this.deviceChannel = deviceChannel;
+        return this;
+    }
+
+    @Override
+    public HMObserver valueKey(ValueKey valueKey) {
+        this.valueKey = valueKey;
+        return this;
+    }
+
+    @Override
+    public HMObserver onceOnly(boolean onceOnly) {
+        this.onceOnly = onceOnly;
+        return this;
+    }
+
+    @Override
+    public Optional<String> start(HMObserverExecution execution) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void handleEvent(String address, String valueKey, Object value) {
+        execution.execute(address, address, ValueKey.valueOf(valueKey), value);
+    }
+    
 }

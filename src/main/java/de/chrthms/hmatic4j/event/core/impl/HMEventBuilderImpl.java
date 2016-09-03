@@ -25,13 +25,16 @@ import de.chrthms.hmatic4j.event.client.HMObserver;
  */
 public class HMEventBuilderImpl implements HMEventBuilder {
 
-    @Override
-    public String helloPlugin() {
-        return getClass().getSimpleName() + " is proud to say hello ;-)";
+    public HMEventBuilderImpl() {
     }
 
     @Override
     public HMObserver observe() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void unobserve(String registryId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -15,13 +15,15 @@
  */
 package de.chrthms.hmatic4j.event.client;
 
+import de.chrthms.hmatic4j.event.client.enums.ValueKey;
+
 /**
  *
  * @author christian
  */
-public interface HMEventBuilder {
-     
-    HMObserver observe();
-    void unobserve(String registryId);
+@FunctionalInterface
+public interface HMObserverExecution {
+    
+    void execute(String deviceAddress, String deviceChannel, ValueKey valueKey, Object value);
     
 }
