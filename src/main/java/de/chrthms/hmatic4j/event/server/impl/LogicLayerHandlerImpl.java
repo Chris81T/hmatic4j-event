@@ -16,6 +16,8 @@
 
 package de.chrthms.hmatic4j.event.server.impl;
 
+import de.chrthms.hmatic4j.event.core.HMEventRegistry;
+import de.chrthms.hmatic4j.event.core.impl.HMEventRegistryImpl;
 import de.chrthms.hmatic4j.event.exceptions.HMInvalidMethodCallTypesException;
 import de.chrthms.hmatic4j.event.exceptions.HMUnsupportedLogicLayerMethodException;
 import de.chrthms.hmatic4j.event.server.LogicLayerHandler;
@@ -53,12 +55,13 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
     }
     
     @Override
-    public Object multicall(List<Map<String, Object>> requests) {
+    public Object[] multicall(List<Map<String, Object>> requests) {
         LOG.info("\n>>>>>>>>>>> system.multicall >>>>>>>>>>>>");
         LOG.info("requests = {}", requests);
         LOG.info("<<<<<<<<<<< system.multicall <<<<<<<<<<<<\n");
         
-        AtomicReference<Object> methodResult = new AtomicReference<>();
+        AtomicReference<List<Object>> methodResults = new AtomicReference<>();
+        methodResults.set(new ArrayList<>());
         
         requests.forEach(request -> {
             
@@ -77,7 +80,7 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
                 // check, if given methodName is supported...
                 LogicLayerMethods method = LogicLayerMethods.get(methodName);
                 if (method != null) {
-
+                    
                     switch (method) {
                         case DELETE_DEVICES:
                             LOG.info("TODO TODO TODO switch(method) --> DELETE_DEVICES");
@@ -87,7 +90,7 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
                             final String address = (String) params[1];
                             final String valueKey = (String) params[2];
                             event(interfaceId, address, valueKey, params[3]);
-                            methodResult.set(Void.class);
+                            methodResults.get().add(Void.class);
                             break;
                         case LIST_DEVICES:
                             LOG.info("TODO TODO TODO switch(method) --> LIST_DEVICES");
@@ -106,7 +109,11 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
                             break;
                         case UPDATE_DEVICE:
                             LOG.info("TODO TODO TODO switch(method) --> UPDATE_DEVICE");
-                            break;                                
+                            break;     
+                            
+                        
+                        
+                            
                     }
 
                 } else {
@@ -120,8 +127,9 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
             }
                             
         });
-        
-        return methodResult.get();
+               
+        List<Object> resultList = methodResults.get();
+        return resultList.toArray(new Object[resultList.size()]);
     }
         
     @Override
@@ -141,6 +149,9 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
         LOG.info("valueKey = {}", valueKey);
         LOG.info("value = {}", value);
         LOG.info("<<<<<<<<<<< EVENT <<<<<<<<<<<<\n");
+        
+        HMEventRegistry registry = HMEventRegistryImpl.getInstance();
+        registry.getAllObservers().forEach(observer -> observer.handleEvent(address, valueKey, value));
     }
 
     @Override

@@ -15,12 +15,24 @@
  */
 package de.chrthms.hmatic4j.event.core;
 
-import de.chrthms.hmatic4j.event.client.HMEventBuilder;
+import de.chrthms.hmatic4j.event.core.impl.HMObserverImpl;
+import de.chrthms.hmatic4j.event.exceptions.HMEventRegistryException;
+import java.util.Collection;
 
 /**
  *
  * @author christian
  */
-public interface Dummy extends HMEventBuilder {
+public interface HMEventRegistry {
+    
+    /**
+     * 
+     * @param observer
+     * @return a registryId, that can be used to unregister the observer
+     */
+    String register(HMObserverImpl observer);
+    void unregister(String registryId) throws HMEventRegistryException;
+    
+    Collection<HMObserverImpl> getAllObservers();
     
 }

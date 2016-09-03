@@ -35,7 +35,7 @@ public interface LogicLayerHandler {
      * @param requests
      * @return 
      */
-    Object multicall(List<Map<String, Object>> requests);
+    Object[] multicall(List<Map<String, Object>> requests);
 
     String[] listMethods(String interfaceId);
     
