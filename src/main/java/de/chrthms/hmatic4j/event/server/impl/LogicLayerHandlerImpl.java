@@ -150,8 +150,13 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
         LOG.info("value = {}", value);
         LOG.info("<<<<<<<<<<< EVENT <<<<<<<<<<<<\n");
         
+        String[] splittedAddress = address.split(":");
+        
+        final String deviceAddress = splittedAddress[0];
+        final String deviceChannel = splittedAddress[1];
+        
         HMEventRegistry registry = HMEventRegistryImpl.getInstance();
-        registry.getAllObservers().forEach(observer -> observer.handleEvent(address, valueKey, value));
+        registry.getAllObservers().forEach(observer -> observer.handleEvent(deviceAddress, deviceChannel, valueKey, value));
     }
 
     @Override

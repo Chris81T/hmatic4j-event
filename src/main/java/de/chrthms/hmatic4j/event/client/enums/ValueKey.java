@@ -23,6 +23,7 @@ public enum ValueKey {
     
     LEVEL,
     STOP,
-    WORKING
+    WORKING,
+    DIRECTION
     
 }

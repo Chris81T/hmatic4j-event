@@ -18,6 +18,7 @@ package de.chrthms.hmatic4j.event.core.impl;
 
 import de.chrthms.hmatic4j.event.client.HMEventBuilder;
 import de.chrthms.hmatic4j.event.client.HMObserver;
+import de.chrthms.hmatic4j.event.core.HMEventRegistry;
 
 /**
  *
@@ -30,12 +31,13 @@ public class HMEventBuilderImpl implements HMEventBuilder {
 
     @Override
     public HMObserver observe() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new HMObserverImpl();
     }
 
     @Override
     public void unobserve(String registryId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        HMEventRegistry registry = HMEventRegistryImpl.getInstance();
+        registry.unregister(registryId);
     }
 
 }
