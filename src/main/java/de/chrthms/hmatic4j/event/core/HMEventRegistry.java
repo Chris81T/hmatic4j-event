@@ -26,6 +26,7 @@ import java.util.Collection;
 public interface HMEventRegistry {
     
     /**
+     * Will registry given observer to receive incoming homematic events.
      * 
      * @param observer
      * @return a registryId, that can be used to unregister the observer
