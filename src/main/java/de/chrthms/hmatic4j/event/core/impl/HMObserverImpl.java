@@ -73,9 +73,9 @@ public class HMObserverImpl implements HMObserver {
         registryId = registry.register(this);
         
         if (onceOnly) {
-            return Optional.of(registryId);
+            return Optional.empty();
         }
-        return Optional.empty();
+        return Optional.of(registryId);
     }
     
     public void handleEvent(String deviceAddress, String deviceChannel, String valueKey, Object value) {

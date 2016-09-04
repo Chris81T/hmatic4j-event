@@ -153,7 +153,7 @@ public class LogicLayerHandlerImpl implements LogicLayerHandler {
         String[] splittedAddress = address.split(":");
         
         final String deviceAddress = splittedAddress[0];
-        final String deviceChannel = splittedAddress[1];
+        final String deviceChannel = splittedAddress.length > 1 ? splittedAddress[1] : null;
         
         HMEventRegistry registry = HMEventRegistryImpl.getInstance();
         registry.getAllObservers().forEach(observer -> observer.handleEvent(deviceAddress, deviceChannel, valueKey, value));
