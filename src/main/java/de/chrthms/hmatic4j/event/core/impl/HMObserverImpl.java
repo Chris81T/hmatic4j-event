@@ -20,6 +20,7 @@ import de.chrthms.hmatic4j.event.client.HMObserver;
 import de.chrthms.hmatic4j.event.client.enums.ValueKey;
 import java.util.Optional;
 import de.chrthms.hmatic4j.event.client.HMEventExecution;
+import de.chrthms.hmatic4j.event.client.HMEventDetails;
 import de.chrthms.hmatic4j.event.core.HMEventRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,18 +79,48 @@ public class HMObserverImpl implements HMObserver {
         return Optional.of(registryId);
     }
     
+    private boolean isInterestedInDeviceAddress(String deviceAddress) {
+        return this.deviceAddress == null || this.deviceAddress.equals(deviceAddress);
+    }
+    
+    private boolean isInterestedInDeviceChannel(String deviceChannel) {
+        return this.deviceAddress == null || this.deviceChannel == null || this.deviceChannel.equals(deviceChannel);
+    }
+    
+    private boolean isInterestedInValueKey(ValueKey valueKey) {
+        return this.valueKey.equals(valueKey);
+    }
+    
     public void handleEvent(String deviceAddress, String deviceChannel, String valueKey, Object value) {
         
         LOG.info("About to handle incoming event for deviceAddress = {}, deviceChannel = {}, " +
                 "valueKey = {}, value = {}", new Object[]{deviceAddress, deviceChannel, valueKey, value});
         
-        // TODO first try : ) FILTER CONDITIONS ARE MISSING
-        execution.execute(deviceAddress, deviceChannel, ValueKey.valueOf(valueKey), value);
+        ValueKey typedValueKey = ValueKey.valueOf(valueKey);
         
-        if (onceOnly) {
-            HMEventRegistry registry = HMEventRegistryImpl.getInstance();
-            registry.unregister(registryId);
+        if (isInterestedInDeviceAddress(deviceAddress) &&
+            isInterestedInDeviceChannel(deviceChannel) &&
+            isInterestedInValueKey(typedValueKey)) {
+
+            HMEventDetails eventDetails = new HMEventDetailsImpl(deviceAddress, deviceChannel, typedValueKey, value);
+
+            LOG.info("This observer = {} is interested in to handle this incoming event = {}", this, eventDetails);
+            
+            execution.execute(eventDetails);
+        
+            if (onceOnly) {
+                HMEventRegistry registry = HMEventRegistryImpl.getInstance();
+                registry.unregister(registryId);
+            }
+            
         }
+
+    }
+
+    @Override
+    public String toString() {
+        return "HMObserverImpl{" + "deviceAddress=" + deviceAddress + ", deviceChannel=" + deviceChannel + 
+                ", valueKey=" + valueKey + ", onceOnly=" + onceOnly + ", execution=" + execution + ", registryId=" + registryId + '}';
     }
     
 }

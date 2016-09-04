@@ -15,13 +15,17 @@
  */
 package de.chrthms.hmatic4j.event.client;
 
+import de.chrthms.hmatic4j.event.client.enums.ValueKey;
+
 /**
  *
  * @author christian
  */
-@FunctionalInterface
-public interface HMEventExecution {
-    
-    void execute(HMEventDetails eventDetails);
+public interface HMEventDetails {
+
+    String getDeviceAddress();
+    String getDeviceChannel();
+    ValueKey getValueKey();
+    Object getValue();
     
 }

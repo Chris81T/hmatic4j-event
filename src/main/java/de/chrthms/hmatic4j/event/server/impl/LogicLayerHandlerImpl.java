@@ -23,7 +23,6 @@ import de.chrthms.hmatic4j.event.exceptions.HMUnsupportedLogicLayerMethodExcepti
 import de.chrthms.hmatic4j.event.server.LogicLayerHandler;
 import de.chrthms.hmatic4j.event.server.LogicLayerMethods;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
