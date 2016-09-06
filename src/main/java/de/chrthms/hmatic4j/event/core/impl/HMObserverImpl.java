@@ -88,7 +88,7 @@ public class HMObserverImpl implements HMObserver {
     }
     
     private boolean isInterestedInValueKey(ValueKey valueKey) {
-        return this.valueKey.equals(valueKey);
+        return this.valueKey == null || this.valueKey.equals(valueKey);
     }
     
     public void handleEvent(String deviceAddress, String deviceChannel, String valueKey, Object value) {
