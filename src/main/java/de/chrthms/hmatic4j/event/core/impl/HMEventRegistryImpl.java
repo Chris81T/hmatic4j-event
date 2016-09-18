@@ -41,6 +41,7 @@ public class HMEventRegistryImpl implements HMEventRegistry {
     
     @Override
     public String register(HMObserverImpl observer) {
+        LOG.info("About to registry given observer = {}", observer);
         final String registryId = UUID.randomUUID().toString();
         observers.put(registryId, observer);
         return registryId;
@@ -48,6 +49,7 @@ public class HMEventRegistryImpl implements HMEventRegistry {
 
     @Override
     public void unregister(String registryId) throws HMEventRegistryException {
+        LOG.info("About to un-registry observer with registryId = {}", registryId);
         HMObserverImpl observer = observers.remove(registryId);
         if (observer == null) {
             throw new HMEventRegistryException("Observer with registryId = " +
