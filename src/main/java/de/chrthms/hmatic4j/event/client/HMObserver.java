@@ -50,7 +50,8 @@ public interface HMObserver {
     HMObserver valueKey(ValueKey valueKey);
     
     /**
-     * Only one time observing incoming event.
+     * Only one time observing incoming event. Remember, that sometimes the expected value of the valueKey is not the desired 
+     * one, so onceOnly is not the best choice.
      * 
      * @param onceOnly if this one is set to true (default is false), the 
      *        observer will only react one time for an incoming event, that
@@ -62,10 +63,10 @@ public interface HMObserver {
     /**
      * Start observing homematic events.
      * 
-     * @param execution
+     * @param execution expects no return value as feedback
      * @return a registryId for this observer. Is relevant for un-observe this
      *         observer. If onceOnly is set to true, no id will be returned.
      */
     Optional<String> start(HMEventExecution execution);
-    
+        
 }
