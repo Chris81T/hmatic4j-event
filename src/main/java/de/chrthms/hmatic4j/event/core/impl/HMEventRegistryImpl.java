@@ -19,9 +19,9 @@ package de.chrthms.hmatic4j.event.core.impl;
 import de.chrthms.hmatic4j.event.core.HMEventRegistry;
 import de.chrthms.hmatic4j.event.exceptions.HMEventRegistryException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class HMEventRegistryImpl implements HMEventRegistry {
     
     private static HMEventRegistry registry = null;
     
-    private Map<String, HMObserverImpl> observers = new HashMap<>();            
+    private Map<String, HMObserverImpl> observers = new ConcurrentHashMap<>();            
     
     private HMEventRegistryImpl() {}
     
